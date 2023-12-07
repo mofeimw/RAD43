@@ -8,15 +8,18 @@ import motorControls
 import time
 
 def stream(MOTOR_PIN):
+    # set up pi camera
     cam = PiCamera()
     cam.resolution = (512, 304)
     cam.framerate = 20
     rawCapture = PiRGBArray(cam, size=(512, 304))
 
+    # load YOLO model
     model = YOLO('model.pt')
 
     while True:
         for frame in cam.capture_continuous(rawCapture, format='bgr', use_video_port=True):
+            # grab frame and run model
             imageFrame = frame.array
             detections = model(imageFrame)[0]
 
@@ -42,9 +45,11 @@ def stream(MOTOR_PIN):
                 if float(signal) == 1.0:
                     label = "walk"
                     color = (0, 240, 0) # walk => green
+                    motorControls.doubleVibrate(MOTOR_PIN) # signal motor
                 else:
                     label = "stop"
                     color = (0, 0, 240) # stop => red
+                    motorControls.vibrateLong(MOTOR_PIN) # signal motor
 
                 # add confidence and distance to label
                 label += " [" + str(confidence)[:4] + "]"

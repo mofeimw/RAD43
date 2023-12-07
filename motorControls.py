@@ -13,12 +13,12 @@ def vibrate(MOTOR_PIN, control):
         GPIO.output(MOTOR_PIN, 0)
         print("not vibrating.")
 
-def vibrate_long(MOTOR_PIN):
+def vibrateLong(MOTOR_PIN):
     vibrate(MOTOR_PIN, True)
     sleep(3)
     vibrate(MOTOR_PIN, False)
 
-def double_vibrate(MOTOR_PIN):
+def doubleVibrate(MOTOR_PIN):
     vibrate(MOTOR_PIN, True)
     sleep(0.5)
     vibrate(MOTOR_PIN, False)
