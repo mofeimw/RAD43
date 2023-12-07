@@ -1,7 +1,7 @@
 import cv2 as cv
 from picamera import PiCamera
 from picamera.array import PiRGBArray
-fromt ultralytics import YOLO
+from ultralytics import YOLO
 
 import motorControls
 
@@ -45,11 +45,11 @@ def stream(MOTOR_PIN):
                 if float(signal) == 1.0:
                     label = "walk"
                     color = (0, 240, 0) # walk => green
-                    motorControls.doubleVibrate(MOTOR_PIN) # signal motor
+                    motorControls.vibrateLong(MOTOR_PIN) # signal motor
                 else:
                     label = "stop"
                     color = (0, 0, 240) # stop => red
-                    motorControls.vibrateLong(MOTOR_PIN) # signal motor
+                    motorControls.doubleVibrate(MOTOR_PIN) # signal motor
 
                 # add confidence and distance to label
                 label += " [" + str(confidence)[:4] + "]"
